@@ -1,0 +1,1 @@
+﻿{"name":"Direct Print","id":20000,"commands":[{"theme":"Direct Print","syntax":"PRINT BLOB(&T;&O;&L)"},{"theme":"Direct Print","syntax":"PRINT BLOB ARRAY(&T;&Y;&L)"}]}
