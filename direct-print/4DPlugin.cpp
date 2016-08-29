@@ -61,11 +61,10 @@ void PRINT_BLOB(sLONG_PTR *pResult, PackagePtr pParams)
 		
 		LPTSTR printerName = Param1.getUTF16Length() ? (LPTSTR)Param1.getUTF16StringPtr() : NULL;
 		HANDLE printer = NULL;
-		PRINTER_DEFAULTS printerDefaults;
 		
 		BOOL success = OpenPrinter(printerName,
 															 &printer,
-															 &printerDefaults);
+															 NULL);
 		if(success)
 		{
 			DOC_INFO_1 docInfo;
@@ -129,11 +128,10 @@ void PRINT_BLOB_ARRAY(sLONG_PTR *pResult, PackagePtr pParams)
 				
 				LPTSTR printerName = Param1.getUTF16Length() ? (LPTSTR)Param1.getUTF16StringPtr() : NULL;
 				HANDLE printer = NULL;
-				PRINTER_DEFAULTS printerDefaults = NULL;
 				
 				BOOL success = OpenPrinter(printerName,
 																	 &printer,
-																	 &printerDefaults);
+																	 NULL);
 				if(success)
 				{
 					DOC_INFO_1 docInfo;
