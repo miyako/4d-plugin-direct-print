@@ -19,7 +19,7 @@ PRINT BLOB ARRAY
 ```
 
 Examples
----
+```
 $printerName:="ZEBRA GK420D"
 C_BLOB($ZPL)
 
@@ -42,4 +42,4 @@ $ZPLs{2}:=$ZPL
 $ZPLs{3}:=$ZPL
 
 PRINT BLOB ARRAY ($printerName;$ZPLs;$ERR)
----
+```
