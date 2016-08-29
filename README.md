@@ -13,10 +13,10 @@ http://stackoverflow.com/questions/4442122/send-raw-zpl-to-zebra-printer-via-usb
 |🚫|🚫|🆗|🆗|
 
 Commands
----
+```
 PRINT BLOB
 PRINT BLOB ARRAY
----
+```
 
 Examples
 ---
