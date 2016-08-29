@@ -14,6 +14,8 @@
 #ifndef __FLAGS__
 #define __FLAGS__
 
+#define PLUGIN_API_V11
+
 //#define PA_SMALLENDIAN 1
 //#define PA_BIGENDIAN 0
 #define PA_64BITS_ARCHITECTURE 0
