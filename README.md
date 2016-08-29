@@ -6,11 +6,13 @@ based on
 http://stackoverflow.com/questions/2044676/net-code-to-send-zpl-to-zebra-printers
 http://stackoverflow.com/questions/4442122/send-raw-zpl-to-zebra-printer-via-usb
 
+on mac, using [PMPrinterPrintWithFile](https://developer.apple.com/library/prerelease/content/samplecode/PMPrinterPrintWithFile/Introduction/Intro.html#//apple_ref/doc/uid/DTS10003958-Intro-DontLinkElementID_2) with the MIME type ``application/vnd.cups-raw ``.
+
 ##Platform
 
 | carbon | cocoa | win32 | win64 |
 |:------:|:-----:|:---------:|:---------:|
-|🚫|🚫|🆗|🆗|
+|🆗|🆗|🆗|🆗|
 
 Commands
 ```
