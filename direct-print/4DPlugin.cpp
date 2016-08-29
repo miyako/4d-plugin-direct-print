@@ -114,7 +114,7 @@ void PRINT_BLOB_ARRAY(sLONG_PTR *pResult, PackagePtr pParams)
 {
 	C_TEXT Param1;
 	C_LONGINT Param3;
-#ifdef eVK_ArrayBlob
+
 	PA_Variable arr = *((PA_Variable*) pParams[1]);
 	
 	if(&arr)
@@ -143,12 +143,12 @@ void PRINT_BLOB_ARRAY(sLONG_PTR *pResult, PackagePtr pParams)
 					if(printJob)
 					{
 						PA_long32 size = PA_GetArrayNbElements(arr);
-						for(unsigned int i = 1; i <= size; ++i)
+						for(PA_long32 i = 1; i <= size; ++i)
 						{
 							PA_Blob blob = PA_GetBlobInArray(arr, i);
 							LPVOID buf = (LPVOID)PA_LockHandle(blob.fHandle);
 							
-							DWORD = len = blob.fSize;
+							DWORD len = blob.fSize;
 							DWORD written = 0;
 							success = WritePrinter(&printer,
 																		 buf,
@@ -181,7 +181,7 @@ void PRINT_BLOB_ARRAY(sLONG_PTR *pResult, PackagePtr pParams)
 			}
 		}
 	}
-#endif
+
 	Param3.toParamAtIndex(pParams, 3);
 }
 
