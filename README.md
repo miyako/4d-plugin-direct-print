@@ -48,7 +48,7 @@ Both commands accept an optional ``$4``, which is a MIME type on Mac (passed to 
 
 By default, the value is ``application/vnd.cups-raw `` on Mac, ``RAW`` on Windows.
 
-Example of print PDF direcrtly on Mac
+To print PDF direcrtly on Mac
 ```
 PRINT BLOB(Get current printer;$PDF;$ERR;"application/pdf")
 ```
