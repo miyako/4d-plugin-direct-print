@@ -47,3 +47,8 @@ PRINT BLOB ARRAY ($printerName;$ZPLs;$ERR)
 Both commands accept an optional ``$4``, which is a MIME type on Mac (passed to [PMPrinterPrintWithProvider](https://developer.apple.com/reference/applicationservices/1461110-pmprinterprintwithprovider?language=objc)), or ``pDatatype`` of the [DOC_INFO_1](https://msdn.microsoft.com/en-us/library/windows/desktop/dd162471(v=vs.85).aspx) structure on Windows.
 
 By default, the value is ``application/vnd.cups-raw `` on Mac, ``RAW`` on Windows.
+
+Example of print PDF direcrtly on Mac
+```
+PRINT BLOB(Get current printer;$PDF;$ERR;"application/pdf")
+```
