@@ -1,12 +1,10 @@
 # 4d-plugin-direct-print
-Send raw data to printer on windows
+Send raw data to printer
 
 based on 
 
 http://stackoverflow.com/questions/2044676/net-code-to-send-zpl-to-zebra-printers
 http://stackoverflow.com/questions/4442122/send-raw-zpl-to-zebra-printer-via-usb
-
-on mac, using [PMPrinterPrintWithFile](https://developer.apple.com/library/prerelease/content/samplecode/PMPrinterPrintWithFile/Introduction/Intro.html#//apple_ref/doc/uid/DTS10003958-Intro-DontLinkElementID_2) with the MIME type ``application/vnd.cups-raw ``.
 
 ##Platform
 
@@ -45,3 +43,7 @@ $ZPLs{3}:=$ZPL
 
 PRINT BLOB ARRAY ($printerName;$ZPLs;$ERR)
 ```
+
+Both commands accept an optional ``$4``, which is a MIME type on Mac (passed to [PMPrinterPrintWithProvider](https://developer.apple.com/reference/applicationservices/1461110-pmprinterprintwithprovider?language=objc)), or ``pDatatype`` of the [DOC_INFO_1](https://msdn.microsoft.com/en-us/library/windows/desktop/dd162471(v=vs.85).aspx) structure on Windows.
+
+By default, the value is ``application/vnd.cups-raw `` on Mac, ``RAW`` on Windows.
