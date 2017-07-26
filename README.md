@@ -19,7 +19,7 @@ http://stackoverflow.com/questions/4442122/send-raw-zpl-to-zebra-printer-via-usb
 ## Syntax
 
 ```
-PRINT BLOB(printer;data;error)
+PRINT BLOB(printer;data;error{;type})
 ```
 
 Parameter|Type|Description
@@ -27,9 +27,10 @@ Parameter|Type|Description
 printer|TEXT|
 data|BLOB|
 error|LONGINT|
+type|TEXT|
 
 ```
-PRINT BLOB ARRAY(printer;data;error)
+PRINT BLOB ARRAY(printer;data;error{;type})
 ```
 
 Parameter|Type|Description
@@ -37,6 +38,7 @@ Parameter|Type|Description
 printer|TEXT|
 data|ARRAY BLOB|
 error|LONGINT|
+type|TEXT|
 
 ## Examples
 
