@@ -8,7 +8,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TyRFP+6IVR+h68PA1QDCOfEiJ4c=
+			978I2L7IbV+rSCXE+4SOWnM1yuo=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -16,6 +16,10 @@
 		<key>Resources/constants.xlf</key>
 		<data>
 		Dxr3Ol0fwxr+VGQwrAC24D+Jn7s=
+		</data>
+		<key>Resources/manifest.json</key>
+		<data>
+		Y1/b/kDhIMZUE2r3LEd3BRpx1aM=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -31,7 +35,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			eEltOjUCqVaDpe+hXNnNaKrOrKNcXW6hqYapDr/nLlw=
+			mj/rZwqXgtBGk9MNVaZB7zCF3BXeS9GFc//xFNsrL1I=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -43,28 +47,26 @@
 			y3C0+meLu/0E3vDTEar1jkD5MYziTlXQWkEGCOZ2wgo=
 			</data>
 		</dict>
+		<key>Resources/manifest.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			crAH60zy+rOEkVZWQ/W+HO0/kGhlaCvAROW6Gm2RpE8=
+			</data>
+		</dict>
 		<key>Windows/Direct Print.4DX</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jrie1ljqHmarMQzzcXTC+tzbaXf8yglPyvLBL8g6mJo=
+			XTAnFqAYNRX15yqBj2OLgQWiNQZeceCMyiKj92qzkPI=
 			</data>
 		</dict>
 		<key>Windows64/Direct Print.4DX</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/17o43+0nOW+KpznimKzSXvnjN8fsWoc0N+6yZUplO8=
+			SRdLqRfgq+PzZGs4IjPFPHj5YbcJN66bUcWUT0BNSi0=
 			</data>
-		</dict>
-		<key>manifest.json</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			Tsexmoq3g8o7nusv84bYPluLAuY=
-			</data>
-			<key>requirement</key>
-			<string>identifier manifest and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = Y69CWUC25B</string>
 		</dict>
 	</dict>
 	<key>rules</key>

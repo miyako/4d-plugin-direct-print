@@ -21,10 +21,10 @@ void PluginMain(PA_long32 selector, PA_PluginParameters params) {
 			// --- Direct Print
             
 			case 1 :
-				PRINT_BLOB(params);
+                PA_RunInMainProcess((PA_RunInMainProcessProcPtr)PRINT_BLOB, params);
 				break;
 			case 2 :
-				PRINT_BLOB_ARRAY(params);
+                PA_RunInMainProcess((PA_RunInMainProcessProcPtr)PRINT_BLOB_ARRAY, params);
 				break;
 
         }
