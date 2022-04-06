@@ -13,7 +13,7 @@ http://stackoverflow.com/questions/4442122/send-raw-zpl-to-zebra-printer-via-usb
 
 ## Syntax
 
-```
+```4d
 PRINT BLOB(printer;data;error{;type})
 ```
 
@@ -24,7 +24,7 @@ data|BLOB|
 error|LONGINT|
 type|TEXT|
 
-```
+```4d
 PRINT BLOB ARRAY(printer;data;error{;type})
 ```
 
@@ -37,7 +37,7 @@ type|TEXT|
 
 ## Examples
 
-```
+```4d
 $printerName:="ZEBRA GK420D"
 C_BLOB($ZPL)
 
@@ -67,6 +67,7 @@ Both commands accept an optional ``$4``, which is a MIME type on Mac (passed to 
 By default, the value is ``application/vnd.cups-raw `` on Mac, ``RAW`` on Windows.
 
 To print PDF direcrtly on Mac
-```
+
+```4d
 PRINT BLOB(Get current printer;$PDF;$ERR;"application/pdf")
 ```
