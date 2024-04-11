@@ -73,39 +73,47 @@ void PRINT_BLOB(PA_PluginParameters params) {
                 docInfo.pDatatype = (LPTSTR)Param4.getUTF16StringPtr();
             }
             
-            DWORD printJob = StartDocPrinter(&printer, (DWORD)1, (LPBYTE)&docInfo);
+            DWORD printJob = StartDocPrinter(printer, (DWORD)1, (LPBYTE)&docInfo);
             
-            if(printJob)
+            if(printJob > 0)
             {
-                LPVOID buf = (LPVOID)PA_LockHandle(h);
-                DWORD len = PA_GetHandleSize(h);
-                DWORD written = 0;
-                success = WritePrinter(&printer,
-                                       buf,
-                                       len,
-                                       &written);
-                
-                if(!success)
+                if(StartPagePrinter(printer))
                 {
-                    Param3.setIntValue(ERR_WRITE_PRINTER);
+                    LPVOID buf = (LPVOID)PA_LockHandle(h);
+                    DWORD len = PA_GetHandleSize(h);
+                    DWORD written = 0;
+                    success = WritePrinter(printer,
+                                           buf,
+                                           len,
+                                           &written);
+                    if(!success)
+                    {
+                        Param3.setIntValue(ERR_WRITE_PRINTER);
+                    }
+                    success = EndPagePrinter(printer);
+                    if(!success)
+                    {
+                        Param3.setIntValue(ERR_END_PAGE_PRINTER);
+                    }
+                    PA_UnlockHandle(h);
                 }
-                
-                PA_UnlockHandle(h);
-                
-                success = EndDocPrinter(&printer);
-                
+                success = EndDocPrinter(printer);
                 if(!success)
                 {
                     Param3.setIntValue(ERR_END_DOC_PRINTER);
                 }
-                
-            }else{
-                Param3.setIntValue(ERR_START_DOC_PRINTER);
             }
-            
+            success = ClosePrinter(printer);
+            if(!success)
+            {
+                Param3.setIntValue(ERR_CLOSE_PRINTER);
+            }
         }else{
-            Param3.setIntValue(ERR_OPEN_PRINTER);
+            Param3.setIntValue(ERR_START_DOC_PRINTER);
         }
+    }else{
+        Param3.setIntValue(ERR_OPEN_PRINTER);
+    }
 #else
         
         NSString *mimeType = @"application/vnd.cups-raw";
@@ -253,45 +261,52 @@ void PRINT_BLOB_ARRAY(PA_PluginParameters params) {
                     docInfo.pDatatype = (LPTSTR)Param4.getUTF16StringPtr();
                 }
                 
-                DWORD printJob = StartDocPrinter(&printer, (DWORD)1, (LPBYTE)&docInfo);
+                DWORD printJob = StartDocPrinter(printer, (DWORD)1, (LPBYTE)&docInfo);
                 
-                if(printJob)
+                if(printJob > 0)
                 {
                     PA_long32 size = PA_GetArrayNbElements(arr);
                     for(PA_long32 i = 1; i <= size; ++i)
                     {
-                        PA_Blob blob = PA_GetBlobInArray(arr, i);
-                        LPVOID buf = (LPVOID)PA_LockHandle(blob.fHandle);
-                        
-                        DWORD len = blob.fSize;
-                        DWORD written = 0;
-                        success = WritePrinter(&printer,
-                                               buf,
-                                               len,
-                                               &written);
-                        
-                        if(!success)
+                        if(StartPagePrinter(printer))
                         {
-                            Param3.setIntValue(ERR_WRITE_PRINTER);
+                            PA_Blob blob = PA_GetBlobInArray(arr, i);
+                            LPVOID buf = (LPVOID)PA_LockHandle(blob.fHandle);
+                            DWORD len = blob.fSize;
+                            DWORD written = 0;
+                            success = WritePrinter(printer,
+                                                   buf,
+                                                   len,
+                                                   &written);
+                            if(!success)
+                            {
+                                Param3.setIntValue(ERR_WRITE_PRINTER);
+                            }
+                            success = EndPagePrinter(printer);
+                            if(!success)
+                            {
+                                Param3.setIntValue(ERR_END_PAGE_PRINTER);
+                            }
+                            PA_UnlockHandle(blob.fHandle);
                         }
-                        
-                        PA_UnlockHandle(blob.fHandle);
                     }
-                    
-                    success = EndDocPrinter(&printer);
-                    
+                    success = EndDocPrinter(printer);
                     if(!success)
                     {
                         Param3.setIntValue(ERR_END_DOC_PRINTER);
                     }
-                    
-                }else{
-                    Param3.setIntValue(ERR_START_DOC_PRINTER);
                 }
-                
+                success = ClosePrinter(printer);
+                if(!success)
+                {
+                    Param3.setIntValue(ERR_CLOSE_PRINTER);
+                }
             }else{
-                Param3.setIntValue(ERR_OPEN_PRINTER);
+                Param3.setIntValue(ERR_START_DOC_PRINTER);
             }
+        }else{
+            Param3.setIntValue(ERR_OPEN_PRINTER);
+        }
 #else
             
             NSString *mimeType = @"application/vnd.cups-raw";
