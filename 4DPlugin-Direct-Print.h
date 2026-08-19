@@ -13,6 +13,17 @@
 
 #include "4DPluginAPI.h"
 
+#if VERSIONWIN
+// Don't rely on <windows.h> transitively pulling this in - the vendored
+// 4D Plugin API SDK's C_TYPES.h now defines WIN32_LEAN_AND_MEAN before its
+// own #include <windows.h>, which suppresses windows.h's normal automatic
+// inclusion of <winspool.h> (OpenPrinter, DOC_INFO_1, StartDocPrinter,
+// StartPagePrinter, WritePrinter, EndPagePrinter, EndDocPrinter,
+// ClosePrinter). winspool.lib is already linked via the .vcxproj, so this
+// header is the only piece that was missing.
+#include <winspool.h>
+#endif
+
 #include "C_LONGINT.h"
 #include "C_TEXT.h"
 
