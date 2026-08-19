@@ -57,6 +57,7 @@ void PRINT_BLOB(PA_PluginParameters params) {
         
         LPTSTR printerName = Param1.getUTF16Length() ? (LPTSTR)Param1.getUTF16StringPtr() : NULL;
         HANDLE printer = NULL;
+        PA_long32 errorCode = 0;
         
         BOOL success = OpenPrinter(printerName,
                                    &printer,
@@ -86,33 +87,40 @@ void PRINT_BLOB(PA_PluginParameters params) {
                                            buf,
                                            len,
                                            &written);
-                    if(!success)
+                    if(!success && !errorCode)
                     {
-                        Param3.setIntValue(ERR_WRITE_PRINTER);
+                        errorCode = ERR_WRITE_PRINTER;
                     }
                     success = EndPagePrinter(printer);
-                    if(!success)
+                    if(!success && !errorCode)
                     {
-                        Param3.setIntValue(ERR_END_PAGE_PRINTER);
+                        errorCode = ERR_END_PAGE_PRINTER;
                     }
                     PA_UnlockHandle(h);
-                }//StartPagePrinter
+                }else{//StartPagePrinter
+                    errorCode = ERR_START_PAGE_PRINTER;
+                }
                 success = EndDocPrinter(printer);
-                if(!success)
+                if(!success && !errorCode)
                 {
-                    Param3.setIntValue(ERR_END_DOC_PRINTER);
+                    errorCode = ERR_END_DOC_PRINTER;
                 }
             }else{
-                Param3.setIntValue(ERR_START_DOC_PRINTER);
+                errorCode = ERR_START_DOC_PRINTER;
             }
             success = ClosePrinter(printer);
-            if(!success)
+            if(!success && !errorCode)
             {
-                Param3.setIntValue(ERR_CLOSE_PRINTER);
+                errorCode = ERR_CLOSE_PRINTER;
             }
         }else{
-            Param3.setIntValue(ERR_OPEN_PRINTER);
+            errorCode = ERR_OPEN_PRINTER;
         }//OpenPrinter
+        
+        if(errorCode)
+        {
+            Param3.setIntValue(errorCode);
+        }
 #else
         
         NSString *mimeType = @"application/vnd.cups-raw";
@@ -123,7 +131,8 @@ void PRINT_BLOB(PA_PluginParameters params) {
         }
         
         NSString *printerName = Param1.copyUTF16String();
-        CFArrayRef printers;
+        CFArrayRef printers = NULL;
+        BOOL matched = NO;
         
         PMServerCreatePrinterList(kPMServerLocal, &printers);
         
@@ -138,6 +147,7 @@ void PRINT_BLOB(PA_PluginParameters params) {
                 if(([_printerName localizedCaseInsensitiveCompare:printerName] == NSOrderedSame)
                    ||([_printerId localizedCaseInsensitiveCompare:printerName] == NSOrderedSame))
                 {
+                    matched = YES;
                     PMPrintSession session;
                     OSStatus status = PMCreateSession(&session);
                     if(!status)
@@ -181,6 +191,8 @@ void PRINT_BLOB(PA_PluginParameters params) {
                                                     }
 
                                                     [data release];
+                                                    
+                                                    PA_UnlockHandle(h);
                                                 }
                                             }
                                         }else{
@@ -207,9 +219,15 @@ void PRINT_BLOB(PA_PluginParameters params) {
                     break;
                 }
             }
-            [printerName release];
             CFRelease(printers);
         }
+        
+        if(!matched)
+        {
+            Param3.setIntValue(ERR_PM_PRINTER_NOT_FOUND);
+        }
+        
+        [printerName release];
         
         if(Param4.getUTF16Length())
         {
@@ -243,6 +261,7 @@ void PRINT_BLOB_ARRAY(PA_PluginParameters params) {
             
             LPTSTR printerName = Param1.getUTF16Length() ? (LPTSTR)Param1.getUTF16StringPtr() : NULL;
             HANDLE printer = NULL;
+            PA_long32 errorCode = 0;
             
             BOOL success = OpenPrinter(printerName,
                                        &printer,
@@ -277,34 +296,41 @@ void PRINT_BLOB_ARRAY(PA_PluginParameters params) {
                                                    buf,
                                                    len,
                                                    &written);
-                            if(!success)
+                            if(!success && !errorCode)
                             {
-                                Param3.setIntValue(ERR_WRITE_PRINTER);
+                                errorCode = ERR_WRITE_PRINTER;
                             }
                             success = EndPagePrinter(printer);
-                            if(!success)
+                            if(!success && !errorCode)
                             {
-                                Param3.setIntValue(ERR_END_PAGE_PRINTER);
+                                errorCode = ERR_END_PAGE_PRINTER;
                             }
                             PA_UnlockHandle(blob.fHandle);
+                        }else if(!errorCode){
+                            errorCode = ERR_START_PAGE_PRINTER;
                         }
                     }
                     success = EndDocPrinter(printer);
-                    if(!success)
+                    if(!success && !errorCode)
                     {
-                        Param3.setIntValue(ERR_END_DOC_PRINTER);
+                        errorCode = ERR_END_DOC_PRINTER;
                     }
                 }
                 else {
-                    Param3.setIntValue(ERR_START_DOC_PRINTER);
+                    errorCode = ERR_START_DOC_PRINTER;
                 }
                 success = ClosePrinter(printer);
-                if(!success)
+                if(!success && !errorCode)
                 {
-                    Param3.setIntValue(ERR_CLOSE_PRINTER);
+                    errorCode = ERR_CLOSE_PRINTER;
                 }
             }else{
-                Param3.setIntValue(ERR_OPEN_PRINTER);
+                errorCode = ERR_OPEN_PRINTER;
+            }
+            
+            if(errorCode)
+            {
+                Param3.setIntValue(errorCode);
             }
 #else
             
@@ -316,7 +342,8 @@ void PRINT_BLOB_ARRAY(PA_PluginParameters params) {
             }
             
             NSString *printerName = Param1.copyUTF16String();
-            CFArrayRef printers;
+            CFArrayRef printers = NULL;
+            BOOL matched = NO;
             
             PMServerCreatePrinterList(kPMServerLocal, &printers);
             
@@ -331,6 +358,7 @@ void PRINT_BLOB_ARRAY(PA_PluginParameters params) {
                     if(([_printerName localizedCaseInsensitiveCompare:printerName] == NSOrderedSame)
                        ||([_printerId localizedCaseInsensitiveCompare:printerName] == NSOrderedSame))
                     {
+                        matched = YES;
                         PMPrintSession session;
                         OSStatus status = PMCreateSession(&session);
                         if(!status)
@@ -408,9 +436,15 @@ void PRINT_BLOB_ARRAY(PA_PluginParameters params) {
                         break;
                     }
                 }
-                [printerName release];
                 CFRelease(printers);
             }
+            
+            if(!matched)
+            {
+                Param3.setIntValue(ERR_PM_PRINTER_NOT_FOUND);
+            }
+            
+            [printerName release];
             
             if(Param4.getUTF16Length())
             {
