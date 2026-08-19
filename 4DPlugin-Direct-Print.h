@@ -21,6 +21,14 @@
 // StartPagePrinter, WritePrinter, EndPagePrinter, EndDocPrinter,
 // ClosePrinter). winspool.lib is already linked via the .vcxproj, so this
 // header is the only piece that was missing.
+//
+// windows.h must be included first: winspool.h's own structs (DOC_INFO_1,
+// PRINTER_INFO_2, etc.) use basic Win32 types (DWORD, LPTSTR, ...) that
+// only exist once windows.h has been processed. Include it explicitly here
+// rather than depending on C_TYPES.h (pulled in below via C_LONGINT.h/
+// C_TEXT.h) happening to run first - windows.h's own include guard makes
+// this safe to include again later.
+#include <windows.h>
 #include <winspool.h>
 #endif
 
