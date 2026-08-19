@@ -4,3 +4,5 @@ direct-print/.vs/*
 direct-print/Objs/*
 direct-print/test/Plugins/Direct Print.bundle/Contents/Windows64/Direct Print.exp
 direct-print/test/Plugins/Direct Print.bundle/Contents/Windows64/Direct Print.lib
+test/userPreferences.*
+test/Project/DerivedData/*
