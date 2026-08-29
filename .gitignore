@@ -6,3 +6,4 @@ direct-print/test/Plugins/Direct Print.bundle/Contents/Windows64/Direct Print.ex
 direct-print/test/Plugins/Direct Print.bundle/Contents/Windows64/Direct Print.lib
 test/userPreferences.*
 test/Project/DerivedData/*
+build/*
